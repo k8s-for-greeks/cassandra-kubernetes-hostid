@@ -1,0 +1,90 @@
+[submodule "_vendor/github.com/golang/glog"]
+	path = _vendor/github.com/golang/glog
+	url = https://github.com/golang/glog
+[submodule "_vendor/k8s.io/client-go"]
+	path = _vendor/k8s.io/client-go
+	url = https://github.com/kubernetes/client-go
+[submodule "_vendor/cloud.google.com/go"]
+	path = _vendor/cloud.google.com/go
+	url = https://github.com/GoogleCloudPlatform/google-cloud-go/
+[submodule "_vendor/github.com/blang/semver"]
+	path = _vendor/github.com/blang/semver
+	url = https://github.com/blang/semver.git
+[submodule "_vendor/github.com/coreos/go-oidc"]
+	path = _vendor/github.com/coreos/go-oidc
+	url = https://github.com/coreos/go-oidc.git
+[submodule "_vendor/github.com/coreos/pkg"]
+	path = _vendor/github.com/coreos/pkg
+	url = https://github.com/coreos/pkg.git
+[submodule "_vendor/github.com/davecgh/go-spew"]
+	path = _vendor/github.com/davecgh/go-spew
+	url = https://github.com/davecgh/go-spew.git
+[submodule "_vendor/github.com/docker/distribution"]
+	path = _vendor/github.com/docker/distribution
+	url = https://github.com/docker/distribution.git
+[submodule "_vendor/github.com/docker/spdystream"]
+	path = _vendor/github.com/docker/spdystream
+	url = https://github.com/docker/spdystream.git
+[submodule "_vendor/github.com/emicklei/go-restful"]
+	path = _vendor/github.com/emicklei/go-restful
+	url = https://github.com/emicklei/go-restful.git
+[submodule "_vendor/github.com/ghodss/yaml"]
+	path = _vendor/github.com/ghodss/yaml
+	url = https://github.com/ghodss/yaml.git
+[submodule "_vendor/github.com/go-openapi/jsonpointer"]
+	path = _vendor/github.com/go-openapi/jsonpointer
+	url = https://github.com/go-openapi/jsonpointer.git
+[submodule "_vendor/github.com/go-openapi/spec"]
+	path = _vendor/github.com/go-openapi/spec
+	url = https://github.com/go-openapi/spec.git
+[submodule "_vendor/github.com/go-openapi/swag"]
+	path = _vendor/github.com/go-openapi/swag
+	url = https://github.com/go-openapi/swag.git
+[submodule "_vendor/github.com/gogo/protobuf"]
+	path = _vendor/github.com/gogo/protobuf
+	url = https://github.com/gogo/protobuf.git
+[submodule "_vendor/github.com/golang/groupcache"]
+	path = _vendor/github.com/golang/groupcache
+	url = https://github.com/golang/groupcache.git
+[submodule "_vendor/github.com/golang/protobuf"]
+	path = _vendor/github.com/golang/protobuf
+	url = https://github.com/golang/protobuf.git
+[submodule "_vendor/github.com/google/gofuzz"]
+	path = _vendor/github.com/google/gofuzz
+	url = https://github.com/google/gofuzz.git
+[submodule "_vendor/github.com/howeyc/gopass"]
+	path = _vendor/github.com/howeyc/gopass
+	url = https://github.com/howeyc/gopass.git
+[submodule "_vendor/github.com/imdario/mergo"]
+	path = _vendor/github.com/imdario/mergo
+	url = https://github.com/imdario/mergo.git
+[submodule "_vendor/github.com/jonboulle/clockwork"]
+	path = _vendor/github.com/jonboulle/clockwork
+	url = https://github.com/jonboulle/clockwork.git
+[submodule "_vendor/github.com/juju/ratelimit"]
+	path = _vendor/github.com/juju/ratelimit
+	url = https://github.com/juju/ratelimit.git
+[submodule "_vendor/github.com/mailru/easyjson"]
+	path = _vendor/github.com/mailru/easyjson
+	url = https://github.com/mailru/easyjson.git
+[submodule "_vendor/github.com/pmezard/go-difflib"]
+	path = _vendor/github.com/pmezard/go-difflib
+	url = https://github.com/pmezard/go-difflib.git
+[submodule "_vendor/github.com/PuerkitoBio/purell"]
+	path = _vendor/github.com/PuerkitoBio/purell
+	url = https://github.com/PuerkitoBio/purell.git
+[submodule "_vendor/github.com/PuerkitoBio/urlesc"]
+	path = _vendor/github.com/PuerkitoBio/urlesc
+	url = https://github.com/PuerkitoBio/urlesc.git
+[submodule "_vendor/github.com/spf13/pflag"]
+	path = _vendor/github.com/spf13/pflag
+	url = https://github.com/spf13/pflag.git
+[submodule "_vendor/github.com/stretchr/testify"]
+	path = _vendor/github.com/stretchr/testify
+	url = https://github.com/stretchr/testify.git
+[submodule "_vendor/github.com/ugorji/go"]
+	path = _vendor/github.com/ugorji/go
+	url = https://github.com/ugorji/go.git
+[submodule "_vendor/k8s.io/apimachinery"]
+	path = _vendor/k8s.io/apimachinery
+	url = https://github.com/kubernetes/apimachinery
