@@ -88,3 +88,9 @@
 [submodule "_vendor/k8s.io/apimachinery"]
 	path = _vendor/k8s.io/apimachinery
 	url = https://github.com/kubernetes/apimachinery
+[submodule "_vendor/github.com/go-openapi/jsonreference"]
+	path = _vendor/github.com/go-openapi/jsonreference
+	url = https://github.com/go-openapi/jsonreference.git
+[submodule "_vendor/github.com/opencontainers/go-digest"]
+	path = _vendor/github.com/opencontainers/go-digest
+	url = https://github.com/opencontainers/go-digest.git

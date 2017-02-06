@@ -20,35 +20,33 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type HostIdCmd struct {
-	Pod        string
-	Namespace  string
-	Annotation string
-	Nodetool   string
-	cobraCommand *cobra.Command
-}
-
-// hostidCmd represents the hostid command
-var hostIdCmd = HostIdCmd{
-	cobraCommand: &cobra.Command{
-		Use:   "hostid",
-		Short: "A brief description of your command",
-		Long: `A longer description that spans multiple lines and likely contains examples
+// getCmd represents the get command
+var getCmd = &cobra.Command{
+	Use:   "get",
+	Short: "A brief description of your command",
+	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		// TODO: Work your own magic here
+		fmt.Println("get called")
 	},
 }
 
 func init() {
-	cmd := hostIdCmd.cobraCommand
-	RootCmd.AddCommand(cmd)
+	hostIdCmd.cobraCommand.AddCommand(getCmd)
 
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Pod,"pod", "p","", "Pod Name")
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Namespace,"namespace", "ns","", "Pod Namespace")
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Annotation,"annotation", "a","", "Annotation Prefix")
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Nodetool,"nodetool", "nt","", "Nodetool Path")
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// getCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// getCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 }
