@@ -23,8 +23,6 @@ import (
 	"regexp"
 
 	"github.com/golang/glog"
-	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/pkg/api/v1"
 )
@@ -72,7 +70,7 @@ func CreateCasssandraHostId(nodeToolPath string, pod string, namespace string, a
 
 func (h CasssandraHostId) getSerializedReference() (ref *v1.ObjectReference, err error) {
 
-	pod, err := h.Client.Pods(h.Namespace).Get(h.PodName, meta_v1.GetOptions{})
+	pod, err := h.Client.Pods(h.Namespace).Get(h.PodName)
 	if err != nil {
 		glog.Errorf("foo", h.PodName)
 		return nil, err
@@ -100,7 +98,7 @@ func (h CasssandraHostId) GetHostId() (*string, error) {
 		return nil, fmt.Errorf("Could not find StatefulSet: %s", err)
 	}
 
-	statefulSet, err := h.Client.StatefulSets(r.Namespace).Get(r.Name, meta_v1.GetOptions{})
+	statefulSet, err := h.Client.StatefulSets(r.Namespace).Get(r.Name)
 	if err != nil {
 		return nil, fmt.Errorf("Could not find StatefulSet %s: %s", r.Name, err)
 	}
@@ -127,7 +125,7 @@ func (h CasssandraHostId) SaveHostId() error {
 	}
 
 	statefulSets := h.Client.StatefulSets(r.Namespace)
-	statefulSet, err := statefulSets.Get(r.Name, meta_v1.GetOptions{})
+	statefulSet, err := statefulSets.Get(r.Name)
 	if err != nil {
 		return fmt.Errorf("Could not find StatefulSet %s, %s", r.Name, err)
 	}
@@ -145,7 +143,7 @@ func (h CasssandraHostId) SaveHostId() error {
 
 	glog.Info("Patching StatefulSet: %s", string(patchBytes))
 
-	result, err := statefulSets.Patch(statefulSet.Name, types.MergePatchType, patchBytes)
+	result, err := statefulSets.Patch(statefulSet.Name, api.MergePatchType, patchBytes)
 	if err != nil {
 		return fmt.Errorf("Error patching StatefulSet: %s", err)
 	}

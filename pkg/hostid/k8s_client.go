@@ -6,7 +6,6 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	typed_v1 "k8s.io/client-go/kubernetes/typed/core/v1"
-	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	apps_v1beta1 "k8s.io/client-go/kubernetes/typed/apps/v1beta1"
 
 )
@@ -56,7 +55,7 @@ func (bw K8sClient) Pods(namespace string) typed_v1.PodInterface {
 }
 
 func (bw K8sClient) GetPod(podName string, podNamespace string) (*v1.Pod, error) {
-	pod, err := bw.k8sClient.CoreV1().Pods(podNamespace).Get(podName,  meta_v1.GetOptions{} )
+	pod, err := bw.k8sClient.CoreV1().Pods(podNamespace).Get(podName)
 
 	if err != nil {
 		return nil, fmt.Errorf("Unable to get my own pod %v", err)
