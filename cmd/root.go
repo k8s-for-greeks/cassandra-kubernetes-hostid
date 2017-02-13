@@ -15,19 +15,19 @@
 package cmd
 
 import (
-	"fmt"
 	goflag "flag"
+	"fmt"
+	"io"
 	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/k8s-for-greeks/cassandra-kubernetes-hostid/_vendor/github.com/gogo/protobuf/io"
 )
 
 var cfgFile string
 
 type RootCmd struct {
-	configFile string
+	configFile   string
 	cobraCommand *cobra.Command
 }
 
@@ -72,9 +72,11 @@ func NewCmdRoot(out io.Writer) *cobra.Command {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports Persistent Flags, which, if defined here,
 	// will be global for your application.
-	cmd := rootCommand.cobraCommand
-	cmd.PersistentFlags().StringVar(&rootCommand.configFile, "config", "", "config file (default is $HOME/.cassandra-kubernetes-hostid.yaml)")
+	c := rootCommand.cobraCommand
+	c.PersistentFlags().StringVar(&rootCommand.configFile, "config", "", "config file (default is $HOME/.cassandra-kubernetes-hostid.yaml)")
 
+	c.AddCommand(NewHostIdCmd(out))
+	return c
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -84,8 +86,8 @@ func initConfig() {
 	}
 
 	viper.SetConfigName(".cassandra-kubernetes-hostid") // name of config file (without extension)
-	viper.AddConfigPath("$HOME")  // adding home directory as first search path
-	viper.AutomaticEnv()          // read in environment variables that match
+	viper.AddConfigPath("$HOME")                        // adding home directory as first search path
+	viper.AutomaticEnv()                                // read in environment variables that match
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {

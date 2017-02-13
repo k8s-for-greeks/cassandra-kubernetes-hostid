@@ -15,40 +15,34 @@
 package cmd
 
 import (
-	"fmt"
+	"io"
 
 	"github.com/spf13/cobra"
 )
 
-type HostIdCmd struct {
+type HostIdOptions struct {
 	Pod        string
 	Namespace  string
 	Annotation string
 	Nodetool   string
-	cobraCommand *cobra.Command
 }
 
-// hostidCmd represents the hostid command
-var hostIdCmd = HostIdCmd{
-	cobraCommand: &cobra.Command{
+func NewHostIdCmd(out io.Writer) *cobra.Command {
+
+	options := &HostIdOptions{}
+
+	c := &cobra.Command{
 		Use:   "hostid",
-		Short: "A brief description of your command",
-		Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+		Short: "hostid",
+		Long:  `todo`,
+	}
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	},
-}
+	c.PersistentFlags().StringVarP(&options.Pod, "pod", "p", "", "Pod Name")
+	c.PersistentFlags().StringVarP(&options.Namespace, "namespace", "n", "", "Pod Namespace")
+	c.PersistentFlags().StringVarP(&options.Annotation, "annotation", "a", "", "Annotation Prefix")
+	c.PersistentFlags().StringVarP(&options.Nodetool, "nodetool", "t", "", "Nodetool Path")
 
-func init() {
-	cmd := hostIdCmd.cobraCommand
-	RootCmd.AddCommand(cmd)
-
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Pod,"pod", "p","", "Pod Name")
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Namespace,"namespace", "ns","", "Pod Namespace")
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Annotation,"annotation", "a","", "Annotation Prefix")
-	cmd.PersistentFlags().StringVarP(&hostIdCmd.Nodetool,"nodetool", "nt","", "Nodetool Path")
-
+	c.AddCommand(NewCreateHostIdCmd(out))
+	c.AddCommand(NewGetHostIdCmd(out))
+	return c
 }

@@ -41,6 +41,7 @@ import (
 	"sync"
 	"time"
 
+	"bytes"
 	emptypb "github.com/golang/protobuf/ptypes/empty"
 	"github.com/golang/protobuf/ptypes/wrappers"
 	"golang.org/x/net/context"
@@ -49,7 +50,6 @@ import (
 	statpb "google.golang.org/genproto/googleapis/rpc/status"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"bytes"
 )
 
 // Server is an in-memory Cloud Bigtable fake.
@@ -552,7 +552,7 @@ func includeCell(f *btpb.RowFilter, fam, col string, cell cell) bool {
 	case *btpb.RowFilter_ValueRangeFilter:
 		v := cell.value
 		// Start value defaults to empty string closed
-		inRangeStart := func() bool { return bytes.Compare(v, []byte{}) >= 0}
+		inRangeStart := func() bool { return bytes.Compare(v, []byte{}) >= 0 }
 		switch sv := f.ValueRangeFilter.StartValue.(type) {
 		case *btpb.ValueRange_StartValueOpen:
 			inRangeStart = func() bool { return bytes.Compare(v, sv.StartValueOpen) > 0 }

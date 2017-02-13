@@ -273,50 +273,50 @@ func TestDropRowRange(t *testing.T) {
 	doWrite()
 	tblSize := len(tbl.rows)
 	req := &btapb.DropRowRangeRequest{
-		Name:tblInfo.Name,
+		Name:   tblInfo.Name,
 		Target: &btapb.DropRowRangeRequest_RowKeyPrefix{[]byte("AAA")},
 	}
 	if _, err = s.DropRowRange(ctx, req); err != nil {
 		t.Fatalf("Dropping first range: %v", err)
 	}
-	got, want := len(tbl.rows), tblSize - count
+	got, want := len(tbl.rows), tblSize-count
 	if got != want {
 		t.Errorf("Row count after first drop: got %d (%v), want %d", got, tbl.rows, want)
 	}
 
 	req = &btapb.DropRowRangeRequest{
-		Name:tblInfo.Name,
+		Name:   tblInfo.Name,
 		Target: &btapb.DropRowRangeRequest_RowKeyPrefix{[]byte("DDD")},
 	}
 	if _, err = s.DropRowRange(ctx, req); err != nil {
 		t.Fatalf("Dropping second range: %v", err)
 	}
-	got, want = len(tbl.rows), tblSize - (2 * count)
-	if got != want  {
+	got, want = len(tbl.rows), tblSize-(2*count)
+	if got != want {
 		t.Errorf("Row count after second drop: got %d (%v), want %d", got, tbl.rows, want)
 	}
 
 	req = &btapb.DropRowRangeRequest{
-		Name:tblInfo.Name,
+		Name:   tblInfo.Name,
 		Target: &btapb.DropRowRangeRequest_RowKeyPrefix{[]byte("XXX")},
 	}
 	if _, err = s.DropRowRange(ctx, req); err != nil {
 		t.Fatalf("Dropping invalid range: %v", err)
 	}
-	got, want = len(tbl.rows), tblSize - (2 * count)
-	if got != want  {
+	got, want = len(tbl.rows), tblSize-(2*count)
+	if got != want {
 		t.Errorf("Row count after invalid drop: got %d (%v), want %d", got, tbl.rows, want)
 	}
 
 	req = &btapb.DropRowRangeRequest{
-		Name:tblInfo.Name,
+		Name:   tblInfo.Name,
 		Target: &btapb.DropRowRangeRequest_DeleteAllDataFromTable{true},
 	}
 	if _, err = s.DropRowRange(ctx, req); err != nil {
 		t.Fatalf("Dropping all data: %v", err)
 	}
 	got, want = len(tbl.rows), 0
-	if got != want  {
+	if got != want {
 		t.Errorf("Row count after drop all: got %d, want %d", got, want)
 	}
 
@@ -325,25 +325,25 @@ func TestDropRowRange(t *testing.T) {
 	doWrite()
 
 	req = &btapb.DropRowRangeRequest{
-		Name:tblInfo.Name,
+		Name:   tblInfo.Name,
 		Target: &btapb.DropRowRangeRequest_DeleteAllDataFromTable{true},
 	}
 	if _, err = s.DropRowRange(ctx, req); err != nil {
 		t.Fatalf("Dropping all data: %v", err)
 	}
 	got, want = len(tbl.rows), 0
-	if got != want  {
+	if got != want {
 		t.Errorf("Row count after drop all: got %d, want %d", got, want)
 	}
 
 	doWrite()
 	got, want = len(tbl.rows), len(prefixes)
-	if got != want  {
+	if got != want {
 		t.Errorf("Row count after rewrite: got %d, want %d", got, want)
 	}
 
 	req = &btapb.DropRowRangeRequest{
-		Name:tblInfo.Name,
+		Name:   tblInfo.Name,
 		Target: &btapb.DropRowRangeRequest_RowKeyPrefix{[]byte("BBB")},
 	}
 	if _, err = s.DropRowRange(ctx, req); err != nil {
@@ -351,7 +351,7 @@ func TestDropRowRange(t *testing.T) {
 	}
 	doWrite()
 	got, want = len(tbl.rows), len(prefixes)
-	if got != want  {
+	if got != want {
 		t.Errorf("Row count after drop range: got %d, want %d", got, want)
 	}
 }

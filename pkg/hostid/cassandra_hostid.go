@@ -57,7 +57,7 @@ func CreateCasssandraHostId(nodeToolPath string, pod string, namespace string, a
 		PodName:           pod,
 		Namespace:         namespace,
 		AnnotationsPrefix: annotationPrefix,
-		Client: c,
+		Client:            c,
 	}, err
 }
 

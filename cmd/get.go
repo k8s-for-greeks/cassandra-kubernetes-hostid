@@ -16,37 +16,68 @@ package cmd
 
 import (
 	"fmt"
+	"io"
+	"os"
 
+	"github.com/k8s-for-greeks/cassandra-kubernetes-hostid/pkg/hostid"
 	"github.com/spf13/cobra"
 )
 
-// getCmd represents the get command
-var getCmd = &cobra.Command{
-	Use:   "get",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("get called")
-	},
+type GetHostIdOptions struct {
 }
 
-func init() {
-	hostIdCmd.cobraCommand.AddCommand(getCmd)
+func NewGetHostIdCmd(out io.Writer) *cobra.Command {
+	// getCmd represents the get command
+	c := &cobra.Command{
+		Use:   "get",
+		Short: "get hostid",
+		Long:  `TODO`,
+		Run: func(cmd *cobra.Command, args []string) {
+			RunGetHostIdCmd(cmd, out)
+		},
+	}
 
-	// Here you will define your flags and configuration settings.
+	return c
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// getCmd.PersistentFlags().String("foo", "", "A help for foo")
+func RunGetHostIdCmd(cmd *cobra.Command, out io.Writer) error {
+	//n, err := cmd.Flags().GetString("nodetool")
+	n, err := cmd.Parent().PersistentFlags().GetString("nodetool")
+	if err != nil {
+		fmt.Println("nodetool flag not set")
+		os.Exit(2)
+	}
+	p, err := cmd.Flags().GetString("pod")
+	if err != nil {
+		fmt.Println("pod flag not set")
+		os.Exit(2)
+	}
+	ns, err := cmd.Flags().GetString("namespace")
+	if err != nil {
+		fmt.Println("pod flag not set")
+		os.Exit(2)
+	}
+	ann, err := cmd.Flags().GetString("annotation")
+	if err != nil {
+		os.Exit(2)
+	}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// getCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	c, err := hostid.CreateCasssandraHostId(n, p, ns, ann)
 
+	if err != nil {
+		fmt.Println("error setting up host id: %s", err)
+		os.Exit(2)
+	}
+
+	h, err := c.GetHostId()
+
+	if err != nil {
+		fmt.Println("error getting host id: %s", err)
+		os.Exit(2)
+	}
+
+	// TODO fix
+	fmt.Printf("%s", h)
+
+	return nil
 }

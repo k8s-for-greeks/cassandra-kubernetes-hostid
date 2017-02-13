@@ -6,7 +6,6 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
-
 )
 
 func GetClientInCluster() (c *kubernetes.Clientset, err error) {

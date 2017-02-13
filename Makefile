@@ -1,6 +1,6 @@
 UNAME := $(shell uname -s)
 BUILD_NUMBER ?= "local"
-GO_FILES := $(shell find . -type f -name '*.go' -not -path "./vendor/*")
+GO_FILES := $(shell find . -type f -name '*.go' -not -path "./*vendor/*")
 NAME := cassandra-kubernetes-hostid
 
 build: 

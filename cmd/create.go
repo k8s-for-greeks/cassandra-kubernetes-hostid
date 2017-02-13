@@ -17,65 +17,67 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/spf13/cobra"
-	"github.com/k8s-for-greeks/cassandra-kubernetes-hostid/pkg/hostid"
+	"io"
 	"os"
+
+	"github.com/k8s-for-greeks/cassandra-kubernetes-hostid/pkg/hostid"
+	"github.com/spf13/cobra"
 )
 
-// createCmd represents the create command
-var createCmd = &cobra.Command{
-	Use:   "create",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-
-		fmt.Println("create called")
-		n, err := cmd.Flags().GetString("nodetool")
-		if err != nil {
-			fmt.Println("nodetool flag not set")
-			os.Exit(2)
-		}
-		p, err := cmd.Flags().GetString("pod")
-		if err != nil {
-			fmt.Println("pod flag not set")
-			os.Exit(2)
-		}
-		ns, err := cmd.Flags().GetString("namespace")
-		if err != nil {
-			fmt.Println("pod flag not set")
-			os.Exit(2)
-		}
-		ann, err := cmd.Flags().GetString("annotation")
-		if err != nil {
-			os.Exit(2)
-		}
-		c := hostid.CreateCasssandraHostId(n,p,ns,ann)
-
-		err = c.SaveHostId()
-
-		if err != nil {
-			os.Exit(2)
-		}
-		fmt.Println("Create hostId")
-	},
+type CreateHostIdOptions struct {
 }
 
-func init() {
-	hostIdCmd.cobraCommand.AddCommand(createCmd)
+func NewCreateHostIdCmd(out io.Writer) *cobra.Command {
 
-	// Here you will define your flags and configuration settings.
+	// createCmd represents the create command
+	c := &cobra.Command{
+		Use:   "create",
+		Short: "create a hostid for a cassandra instance",
+		Long:  `TODO`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO check errors better
+			RunCreateHostIdCmd(cmd, out)
+		},
+	}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
+	return c
+}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func RunCreateHostIdCmd(cmd *cobra.Command, out io.Writer) error {
 
+	fmt.Println("create called")
+	n, err := cmd.Flags().GetString("nodetool")
+	if err != nil {
+		fmt.Println("nodetool flag not set")
+		os.Exit(2)
+	}
+	p, err := cmd.Flags().GetString("pod")
+	if err != nil {
+		fmt.Println("pod flag not set")
+		os.Exit(2)
+	}
+	ns, err := cmd.Flags().GetString("namespace")
+	if err != nil {
+		fmt.Println("pod flag not set")
+		os.Exit(2)
+	}
+	ann, err := cmd.Flags().GetString("annotation")
+	if err != nil {
+		os.Exit(2)
+	}
+
+	c, err := hostid.CreateCasssandraHostId(n, p, ns, ann)
+
+	if err != nil {
+		os.Exit(2)
+	}
+
+	err = c.SaveHostId()
+
+	if err != nil {
+		os.Exit(2)
+	}
+	fmt.Println("Create hostId")
+
+	return nil
 }

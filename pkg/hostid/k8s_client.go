@@ -4,10 +4,9 @@ import (
 	"fmt"
 
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/pkg/api/v1"
-	typed_v1 "k8s.io/client-go/kubernetes/typed/core/v1"
 	apps_v1beta1 "k8s.io/client-go/kubernetes/typed/apps/v1beta1"
-
+	typed_v1 "k8s.io/client-go/kubernetes/typed/core/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 type K8sClientInterface interface {
@@ -17,7 +16,7 @@ type K8sClientInterface interface {
 }
 
 type K8sClient struct {
-	k8sClient    *kubernetes.Clientset
+	k8sClient *kubernetes.Clientset
 }
 
 func CreateK8sClientInCluster() (*K8sClient, error) {
@@ -29,7 +28,7 @@ func CreateK8sClientInCluster() (*K8sClient, error) {
 	}
 
 	return &K8sClient{
-		k8sClient:    k8sClient,
+		k8sClient: k8sClient,
 	}, nil
 }
 
@@ -42,11 +41,11 @@ func CreateK8sClientOutsideCluster(config string) (*K8sClient, error) {
 	}
 
 	return &K8sClient{
-		k8sClient:    k8sClient,
+		k8sClient: k8sClient,
 	}, nil
 }
 
-func (bw K8sClient) StatefulSets(namespace string) apps_v1beta1.StatefulSetInterface{
+func (bw K8sClient) StatefulSets(namespace string) apps_v1beta1.StatefulSetInterface {
 	return bw.k8sClient.StatefulSets(namespace)
 }
 
@@ -63,4 +62,3 @@ func (bw K8sClient) GetPod(podName string, podNamespace string) (*v1.Pod, error)
 
 	return pod, nil
 }
-
