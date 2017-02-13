@@ -1,8 +1,6 @@
 package hostid
 
 import (
-	"fmt"
-
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -12,7 +10,7 @@ func GetClientInCluster() (c *kubernetes.Clientset, err error) {
 
 	config, err := rest.InClusterConfig()
 	if err != nil {
-		return nil, fmt.Errorf("")
+		return nil, err
 	}
 
 	// creates the clientset
@@ -27,7 +25,7 @@ func GetClientClusterOutOfCluster(kubeconfigFile string) (c *kubernetes.Clientse
 
 	config, err := clientcmd.BuildConfigFromFlags("", kubeconfigFile)
 	if err != nil {
-		panic(err.Error())
+		return nil, err
 	}
 
 	return newForConfig(config)

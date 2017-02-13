@@ -17,13 +17,13 @@ limitations under the License.
 package testing
 
 import (
-	"fmt"
-	"mime"
 	"os"
+	"mime"
+	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
 var testCodecMediaType string

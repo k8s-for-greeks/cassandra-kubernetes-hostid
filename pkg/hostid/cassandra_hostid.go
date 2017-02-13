@@ -44,13 +44,11 @@ type CasssandraHostId struct {
 
 func CreateCasssandraHostId(nodeToolPath string, pod string, namespace string, annotationPrefix string) (*CasssandraHostId, error) {
 
-	if annotationPrefix == "" {
-		annotationPrefix = "cassandra"
-	}
+
 
 	c, err := CreateK8sClientInCluster()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating k8s client %s", err)
 	}
 	return &CasssandraHostId{
 		NodetoolPath:      nodeToolPath, // FIXME how do we get this??
@@ -58,7 +56,7 @@ func CreateCasssandraHostId(nodeToolPath string, pod string, namespace string, a
 		Namespace:         namespace,
 		AnnotationsPrefix: annotationPrefix,
 		Client:            c,
-	}, err
+	}, nil
 }
 
 //nodetoolPath := flag.String("nodetool", "/usr/bin/nodetool", "path to cassandra nodetool")

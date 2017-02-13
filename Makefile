@@ -6,7 +6,7 @@ NAME := cassandra-kubernetes-hostid
 build: 
 	go vet -v
 	mkdir -p .bin/linux-amd64 .bin/darwin
-	GOOS=linux GOARCH=amd64 go build -o .bin/linux-amd64/${NAME} ./
+	#GOOS=linux GOARCH=amd64 go build -o .bin/linux-amd64/${NAME} ./
 	GOOS=darwin GOARCH=amd64 go build -o .bin/darwin/${NAME} ./
 
 ifeq ($(UNAME),Linux)
@@ -18,12 +18,11 @@ endif
 
 test: build
 	go test -v github.com/k8s-for-greeks/${NAME}/pkg/... -args -v=1 -logtostderr
+	go test -v github.com/k8s-for-greeks/${NAME}/cmd/... -args -v=1 -logtostderr
 
 fmt:
-	@ goimports -w -d $(GO_FILES)
-
-dev:
-	go install -v
+	gofmt -w -s cmd/
+	gofmt -w -s pkg/
 
 copydeps:
 	rsync -avz _vendor/ vendor/ --delete --exclude vendor/  --exclude .git

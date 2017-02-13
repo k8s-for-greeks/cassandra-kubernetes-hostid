@@ -20,7 +20,6 @@ import (
 	"io"
 	"os"
 
-	"github.com/k8s-for-greeks/cassandra-kubernetes-hostid/pkg/hostid"
 	"github.com/spf13/cobra"
 )
 
@@ -45,39 +44,27 @@ func NewCreateHostIdCmd(out io.Writer) *cobra.Command {
 
 func RunCreateHostIdCmd(cmd *cobra.Command, out io.Writer) error {
 
-	fmt.Println("create called")
-	n, err := cmd.Flags().GetString("nodetool")
+	// TODO do we always need this path??
+	n, err := cmd.Parent().PersistentFlags().GetString("nodetool")
 	if err != nil {
 		fmt.Println("nodetool flag not set")
 		os.Exit(2)
 	}
-	p, err := cmd.Flags().GetString("pod")
+
+	c, err := SetupCassandraClient(cmd,n)
+
 	if err != nil {
-		fmt.Println("pod flag not set")
-		os.Exit(2)
-	}
-	ns, err := cmd.Flags().GetString("namespace")
-	if err != nil {
-		fmt.Println("pod flag not set")
-		os.Exit(2)
-	}
-	ann, err := cmd.Flags().GetString("annotation")
-	if err != nil {
+		fmt.Printf("error setting up host id: %s\n", err)
 		os.Exit(2)
 	}
 
-	c, err := hostid.CreateCasssandraHostId(n, p, ns, ann)
-
-	if err != nil {
-		os.Exit(2)
-	}
 
 	err = c.SaveHostId()
 
 	if err != nil {
+		fmt.Printf("error saving host id: %s\n", err)
 		os.Exit(2)
 	}
-	fmt.Println("Create hostId")
 
 	return nil
 }

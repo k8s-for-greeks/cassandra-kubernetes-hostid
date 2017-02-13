@@ -24,7 +24,7 @@ func CreateK8sClientInCluster() (*K8sClient, error) {
 	k8sClient, err := GetClientInCluster()
 
 	if err != nil {
-		return nil, fmt.Errorf("Unable to create k8s client %v", err)
+		return nil, fmt.Errorf("Unable to create k8s client %s", err)
 	}
 
 	return &K8sClient{
